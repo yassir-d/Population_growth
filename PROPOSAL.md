@@ -1,107 +1,105 @@
-## Swiss Population Forecasting: A Model Comparison Approach
+# Swiss Population Forecasting: A Model Comparison Approach  
+**Category:** Statistical Modeling • Machine Learning • Time Series Analysis  
 
-Category: Statistical Modeling • Machine Learning • Time Series Analysis
+---
 
-**1. Problem Motivation**
+## 1. Motivation
 
-Population forecasting is essential for public policy, housing planning, pension system sustainability, and long-term infrastructure investment. Switzerland publishes annual demographic data, but forecasting future values is non-trivial: population trends depend on birth rates, mortality, and migration flows.
+Population forecasting is essential for planning housing, pensions, healthcare, and infrastructure. In Switzerland, demographic dynamics are driven by births, deaths, and migration, which are influenced by economic conditions and policy.
 
-Most official forecasts rely on complex demographic models.
-In contrast, this project focuses on data-driven statistical forecasting and investigates:
+The goal of this project is to build a **data-driven forecasting system** for Swiss population growth and to **compare several forecasting models** against a simple baseline. The central question is:
 
-Can simple machine learning models outperform a naïve constant-growth benchmark?
+> Can machine learning models and richer covariates improve population forecasts compared to a naïve constant-growth model?
 
-This question is directly aligned with the course’s goal: implement, compare, and evaluate several predictive models using real data.
+This fits the course objective of applying data science and machine learning methods to real data, with a clear focus on estimation and model comparison.
 
-**2. Data & Legality**
+---
 
-All data will come from fully legal and open official sources:
+## 2. Data
 
-Data Type	Source	Access
-Annual Swiss Population (Total)	Swiss Federal Statistical Office (BFS)	Open data (CSV)
-Birth rate, mortality, migration (optional)	BFS	Open data
-Age-group population (optional)	BFS	Open data
+All data will come from official, open sources (no scraping):
 
-No scraping is needed.
-All datasets can be downloaded as public CSV files from the BFS website.
+- Swiss Federal Statistical Office (BFS):  
+  - Annual total population  
+  - Births and deaths  
+  - Net migration  
 
-**3. Methodology**
-Step 1 — Data Preparation
+- (Optional) Macroeconomic indicators (BFS / SECO):  
+  - GDP growth  
+  - Employment / unemployment rate  
 
-Load BFS population time series (e.g., 1950–2023)
+The target variable is the **annual total population**, while births, deaths, migration and macro variables serve as predictors. This creates a **richer, multi-variable setting** where machine learning can actually “learn” relationships, not just extrapolate a trend.
 
-Clean and transform into annual time-series format
+---
 
-Engineer features such as:
+## 3. Methodology
 
-lagged population values
+### 3.1 Data Preparation
 
-yearly growth rate
+- Load annual data (e.g. 1980–2023) from BFS CSV files  
+- Construct:
+  - Annual growth rate (%)
+  - Lagged population levels
+  - Demographic rates (births/population, deaths/population, net migration/population)
+  - Optional macro features (GDP growth, employment growth)  
+- Split into train and test periods (e.g. 1980–2010 train, 2011–2023 test).
 
-multi-year moving averages
+---
 
-Step 2 — Forecasting Models
-Baseline Model (Required)
+### 3.2 Models
 
-Naïve Constant-Growth Model
-Uses historical % average growth to predict future population.
+**Baseline model (naïve):**
 
-This model serves as the benchmark:
+- Constant growth: forecast population assuming the average historical growth rate continues unchanged.
 
-If machine learning cannot beat this, it is not useful.
+**Statistical / ML models:**
 
-Machine Learning & Statistical Models
-Model	Purpose
-Linear Regression	Model population as linear function of time & lagged values
-AR / ARIMA (statsmodels)	Capture persistence in population growth
-Random Forest Regression	Learn non-linear relationships in the time series
+1. **Multiple Linear Regression**  
+   - Predict population (or growth) using lagged population and demographic/macro variables.  
+   - Interpretable coefficients (e.g. effect of migration on population growth).
 
-All models will be trained on historical data and evaluated on held-out years.
+2. **Time-Series Model (AR / ARIMA)**  
+   - Purely time-series based, modeling autocorrelation in population or growth rates.  
+   - Captures persistence and shocks over time.
 
-Step 3 — Model Evaluation
+3. **Random Forest Regression**  
+   - Non-linear model using all available predictors (lags + demographic + macro variables).  
+   - Can capture interactions (e.g. migration × GDP growth) and non-linear effects.  
+   - Provides feature importance for interpretability.
 
-Each model will be evaluated using a formal model comparison procedure:
+4. **Gradient Boosted Trees (e.g. XGBoost or equivalent)**  
+   - More flexible ensemble model, often strong in tabular forecasting tasks.  
+   - Tests whether boosting improves over Random Forest and linear models.
 
-RMSE (root mean squared error)
+(Neural network / MLP is a possible stretch goal if time allows.)
 
-MAE (mean absolute error)
+---
 
-MAPE (percentage error)
+### 3.3 Model Evaluation
 
-Train/test split (e.g., train on 1950-2010, test on 2011-2023)
+- Train on earlier years, test on the most recent years.  
+- Metrics:
+  - RMSE (main metric)
+  - MAE
+  - MAPE  
+- Visual comparison of forecast vs actual series.  
+- Rank models by out-of-sample performance and discuss overfitting vs generalization.
 
-A ranking table will show which model performs best.
+---
 
-**4. Expected Challenges**
-
-Time-series forecasting with limited sample size
-
-Overfitting risk in non-linear ML models
-
-Ensuring fair comparison across models
-
-Feature engineering for long-term demographic trends
-
-**5. Success Criteria**
+## 4. Success Criteria
 
 The project is successful if:
 
-At least one ML model clearly outperforms the naïve baseline
+- All models are implemented in Python with clean, modular code (src/, tests/).  
+- At least one model **significantly outperforms** the naïve constant-growth baseline on test data.  
+- Results are clearly visualized and interpreted (plots + error tables).  
+- The report explains which model works best, why, and what the limitations are.
 
-Results are validated, plotted, and statistically interpretable
+---
 
-Code is modular, documented, and tested
+## 5. Stretch Goals (Optional / not sure yet)
 
-A clear conclusion is obtained:
-
-Which model forecasts Swiss population most accurately?
-
-**6. Stretch Goals (Optional/not sure yet)**
-
-Age-group-specific forecasting (0–19, 20–64, 65+)
-
-Migration-only modeling scenario
-
-Cross-country comparison (Switzerland vs France/Germany)
-
-Streamlit dashboard for interactive forecasting
+- Age-group-specific forecasting (e.g. 0–19, 20–64, 65+).  
+- Scenario analysis (high vs low migration).  
+- Simple Streamlit dashboard for interactive forecasts.

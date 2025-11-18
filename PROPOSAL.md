@@ -1,117 +1,107 @@
-# Project Proposal  
-**Title:** Population Growth & Migration Simulator — Switzerland  
-**Category:** Simulation & Modeling + Data Science + Machine Learning  
+## Swiss Population Forecasting: A Model Comparison Approach
 
-## 1. Problem Motivation
+Category: Statistical Modeling • Machine Learning • Time Series Analysis
 
-Population growth and migration are central to many economic and policy questions: pressure on housing, pensions, schools, and healthcare all depend on how the population evolves over time. Switzerland (and especially urban areas like Geneva) faces ageing, immigration, and changing birth rates, which make future population paths highly uncertain.
+**1. Problem Motivation**
 
-The goal of this project is to build a **data-driven population simulator** that models how the Swiss (or Geneva) population evolves over the next 20–30 years. The core idea is to combine:
+Population forecasting is essential for public policy, housing planning, pension system sustainability, and long-term infrastructure investment. Switzerland publishes annual demographic data, but forecasting future values is non-trivial: population trends depend on birth rates, mortality, and migration flows.
 
-- **Historical demographic data** (births, deaths, migration by age group),
-- **Statistical / ML models** to estimate future demographic rates,
-- **Simulation techniques** to generate many possible future population trajectories.
+Most official forecasts rely on complex demographic models.
+In contrast, this project focuses on data-driven statistical forecasting and investigates:
 
-The final tool will answer questions such as:
+Can simple machine learning models outperform a naïve constant-growth benchmark?
 
-> “Under current trends, what is the probability that the share of 65+ exceeds X% by year Y?”  
-> “How do different migration scenarios affect total population and age structure?”
+This question is directly aligned with the course’s goal: implement, compare, and evaluate several predictive models using real data.
 
----
+**2. Data & Legality**
 
-## 2. Data & Legality
+All data will come from fully legal and open official sources:
 
-All data will come from **open and official sources**:
+Data Type	Source	Access
+Annual Swiss Population (Total)	Swiss Federal Statistical Office (BFS)	Open data (CSV)
+Birth rate, mortality, migration (optional)	BFS	Open data
+Age-group population (optional)	BFS	Open data
 
-- Swiss Federal Statistical Office (BFS): historical population by age, births, deaths, migration  
-- (Optionally) Open Data Genève: canton-level demographics  
+No scraping is needed.
+All datasets can be downloaded as public CSV files from the BFS website.
 
-These are publicly available as CSV/Excel and can be used legally for analysis. No scraping of commercial websites is needed.
+**3. Methodology**
+Step 1 — Data Preparation
 
----
+Load BFS population time series (e.g., 1950–2023)
 
-## 3. Methodology (Data Science + ML + Simulation)
+Clean and transform into annual time-series format
 
-### Step 1 — Data Preparation
+Engineer features such as:
 
-- Load historical yearly (or quarterly) data on:
-  - Population by age group
-  - Birth rates, death rates
-  - Net migration (inflows – outflows)
-- Construct a panel/time-series of demographic rates:
-  - Age-specific fertility rates
-  - Age-specific mortality rates
-  - Net migration rates by age or group
-- Split data into **training and test periods** (e.g. 1990–2015 train, 2016–2023 test).
+lagged population values
 
-### Step 2 — Statistical / Machine Learning Estimation
+yearly growth rate
 
-For each rate (birth, death, migration), fit predictive models:
+multi-year moving averages
 
-- **Time-series regression models** (e.g. AR, ARIMA-like or linear regression with lags)  
-- And/or **tree-based models** (Random Forest / Gradient Boosting) using:
-  - Past values of the rate
-  - Overall economic indicators (if available, e.g. unemployment, GDP growth)
+Step 2 — Forecasting Models
+Baseline Model (Required)
 
-Validation:
+Naïve Constant-Growth Model
+Uses historical % average growth to predict future population.
 
-- Rolling-origin or expanding-window time-series cross-validation  
-- Compare to simple baselines (e.g. “last year’s rate”)  
-- Metrics: MAE / RMSE for rate predictions, plus visual inspection of fitted vs actual rates.
+This model serves as the benchmark:
 
-These estimated and validated models give **forecast distributions** for future demographic rates.
+If machine learning cannot beat this, it is not useful.
 
-### Step 3 — Population Simulation (Core Simulation Component)
+Machine Learning & Statistical Models
+Model	Purpose
+Linear Regression	Model population as linear function of time & lagged values
+AR / ARIMA (statsmodels)	Capture persistence in population growth
+Random Forest Regression	Learn non-linear relationships in the time series
 
-Use a standard **cohort-component model** / discrete-time simulation:
+All models will be trained on historical data and evaluated on held-out years.
 
-- Start from the most recent observed population by age
-- For each simulated year:
-  - Apply predicted age-specific mortality to compute survivors  
-  - Apply predicted fertility to estimate births and entry into age 0–4 group  
-  - Apply predicted migration rates to adjust each age group  
+Step 3 — Model Evaluation
 
-To model **uncertainty**, combine the point predictions from ML with stochastic noise:
+Each model will be evaluated using a formal model comparison procedure:
 
-- Draw rates from distributions centered at the ML predictions  
-- Run **many Monte Carlo simulations** (e.g. 1,000–10,000 paths)
+RMSE (root mean squared error)
 
-Outputs per scenario:
+MAE (mean absolute error)
 
-- Total population  
-- Age structure (e.g. share of 0–19, 20–64, 65+)  
-- Dependency ratios (old-age / working-age)
+MAPE (percentage error)
 
-From this, compute probabilities, e.g.:
+Train/test split (e.g., train on 1950-2010, test on 2011-2023)
 
-> “In 2045, in 82% of simulations, the 65+ share exceeds 25%.”
+A ranking table will show which model performs best.
 
-### Step 4 — Visualization & Analysis
+**4. Expected Challenges**
 
-- Time-series plots of simulated population and age shares  
-- Fan charts (prediction intervals) for key variables  
-- Comparison of baseline vs alternative scenarios (e.g. high vs low migration)
+Time-series forecasting with limited sample size
 
----
+Overfitting risk in non-linear ML models
 
-## 4. Expected Challenges
+Ensuring fair comparison across models
 
-- Handling data gaps and changes in age group definitions over time  
-- Designing a robust validation strategy for time-series forecasts  
-- Keeping the model interpretable while incorporating uncertainty
+Feature engineering for long-term demographic trends
 
----
+**5. Success Criteria**
 
-## 5. Success Criteria
+The project is successful if:
 
-The project will be considered successful if:
+At least one ML model clearly outperforms the naïve baseline
 
-- At least one validated model can reasonably forecast key demographic rates  
-- The simulator produces multiple plausible population trajectories  
-- The tool can answer “what if” questions about ageing and migration with clear visualizations  
-- Code is modular, documented, and tested (unit tests for core functions).
+Results are validated, plotted, and statistically interpretable
 
-Stretch goals (if time permits):
+Code is modular, documented, and tested
 
-- Add scenario comparison UI (e.g. Streamlit)  
-- Include simple economic indicators (e.g. pension dependency ratio)
+A clear conclusion is obtained:
+
+Which model forecasts Swiss population most accurately?
+
+**6. Stretch Goals (Optional/not sure yet)**
+
+Age-group-specific forecasting (0–19, 20–64, 65+)
+
+Migration-only modeling scenario
+
+Cross-country comparison (Switzerland vs France/Germany)
+
+Streamlit dashboard for interactive forecasting

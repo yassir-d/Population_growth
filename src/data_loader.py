@@ -83,15 +83,15 @@ def load_population_timeseries() -> pd.DataFrame:
     df_total["Jahr"] = df_total["Jahr"].astype(int)
     df_total = df_total.sort_values("Jahr")
 
-    # 4. Rename columns to something nicer
+    # 4. Rename columns jahr to year
     df_total = df_total.rename(columns={
         "Jahr": "year",
         "DATA": "population_total",
     })
 
-    # 5. Keep only the columns we need
+    # 5. Keep only the columns needed
     df_total = df_total[["year", "population_total"]].reset_index(drop=True)
-    df_total["population_total"] = df_total["population_total"].astype(int)
+    df_total["population_total"] = df_total["population_total"].astype(int)  
 
     print("Yearly population time series shape:", df_total.shape)
     return df_total

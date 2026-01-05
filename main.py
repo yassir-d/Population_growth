@@ -37,9 +37,9 @@ def run_plots(test_start_year: int = 2000, n_lags: int = 2) -> None:
     """
     # Baseline plot
     try:
-        from src.plots_baseline import main as baseline_plot_main
+        from src.plots_baseline import main as baseline_plots_main
 
-        baseline_plot_main(test_start_year=test_start_year)
+        baseline_plots_main(test_start_year=test_start_year)
         print("Baseline plots generated.")
     except Exception as e:
         print(f"⚠️ Skipped baseline plots (src.plots_baseline). Reason: {e}")
@@ -77,7 +77,7 @@ def main() -> None:
     out_csv = paths["tables"] / "model_comparison.csv"
     save_comparison_table(df, out_csv)
 
-    # 3) Plots (optional but recommended)
+    # 3) Plots 
     run_plots(test_start_year=2000, n_lags=2)
 
     print("\n=== Done. Check results/figures and results/tables ===\n")

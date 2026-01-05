@@ -44,14 +44,16 @@ def main(test_start_year: int = 2000, start_year_for_growth: int = 1980, horizon
     plt.tight_layout()
 
     # 5. Ensure results/ folder exists, then save figure
-    results_dir = Path("results")
+    results_dir = Path(__file__).resolve().parents[1] / "results" / "figures"
+    results_dir.mkdir(parents=True, exist_ok=True)
+    out_path = results_dir / "baseline_forecast.png"
     results_dir.mkdir(exist_ok=True)
     out_path = results_dir / "baseline_forecast.png"
     plt.savefig(out_path, dpi=150)
-    print(f"✅ Saved plot to {out_path}")
+    print(f" Saved plot to {out_path}")
 
     # Optional: show the window (if running locally with GUI)
-    plt.show()
+    plt.close()
 
 
 if __name__ == "__main__":

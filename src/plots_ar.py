@@ -77,7 +77,7 @@ def main(test_start_year: int = 2000, n_lags: int = 2) -> None:
     plt.savefig(out1, dpi=200)
     plt.close()
 
-    # --- Plot 2: Residuals (test)
+    # --- Plot 2: Residuals test
     residuals = y_test - yhat_test
     plt.figure(figsize=(10, 5))
     plt.plot(years_test + 1, residuals)
@@ -90,7 +90,7 @@ def main(test_start_year: int = 2000, n_lags: int = 2) -> None:
     plt.savefig(out2, dpi=200)
     plt.close()
 
-    # --- Plot 3: Residual histogram (test)
+    # --- Plot 3: Residual histogram test
     plt.figure(figsize=(10, 5))
     plt.hist(residuals, bins=20)
     plt.title(f"AR({n_lags}) — Residual Distribution (Test)")

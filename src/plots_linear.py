@@ -28,7 +28,8 @@ def main(test_start_year: int = 2000, n_lags: int = 2) -> None:
 
     y_pred = model.predict(X_test)
 
-    # ---- Actual vs Predicted ----
+    #  Actual vs Predicted 
+
     plt.figure(figsize=(10, 5))
     plt.plot(test["year"], y_test, label="Actual")
     plt.plot(test["year"], y_pred, label="Predicted")
@@ -40,7 +41,7 @@ def main(test_start_year: int = 2000, n_lags: int = 2) -> None:
     plt.savefig(RESULTS_DIR / "linear_actual_vs_pred.png")
     plt.close()
 
-    # ---- Residuals ----
+    #  Residuals 
     residuals = y_test - y_pred
 
     plt.figure(figsize=(10, 5))

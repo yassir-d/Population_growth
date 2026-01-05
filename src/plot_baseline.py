@@ -6,7 +6,7 @@ import pandas as pd
 from src.data_loader import load_population_timeseries
 from src.baseline_model import estimate_baseline_growth, forecast_baseline
 
-def main () -> None:
+def main(test_start_year: int = 2000, start_year_for_growth: int = 1980, horizon: int = 20) -> None:
     # 1 Load yearly population data 
     ts = load_population_timeseries()
 

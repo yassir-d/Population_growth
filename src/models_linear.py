@@ -23,7 +23,7 @@ def train_test_split_time(
     return train, test
 
 
-def fit_linear_model(df_ml: pd.DataFrame, test_start_year: int = 2000) -> None:
+def fit_linear_model(df_ml: pd.DataFrame, test_start_year: int = 2000) -> dict:
     """
     Fit a linear regression model to predict next year's population.
 
@@ -78,3 +78,18 @@ def fit_linear_model(df_ml: pd.DataFrame, test_start_year: int = 2000) -> None:
     print(f"Train RMSE: {rmse_train:,.0f}")
     print(f"Test  RMSE: {rmse_test:,.0f}")
     print(f"Train n={len(train)}, Test n={len(test)}")
+
+    results = {
+    
+    "model": "Linear regression",
+    "train_rmse": float(rmse_train),
+    "test_rmse": float(rmse_test),
+    "n_features": X_train.shape[1],
+    "train_size": len(X_train),
+    "test_size": len(X_test),
+}
+    return results
+
+
+ 
+

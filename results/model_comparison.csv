@@ -1,0 +1,4 @@
+model,train_rmse,test_rmse,avg_growth,train_size,test_size,n_features,n_lags
+Baseline constant growth,,329710.5201517864,0.006499008280036595,140,25,,
+Linear regression,12834.845055690797,21846.29572265454,,138,24,4.0,
+AR(2),28527.786068873145,39101.86014316091,,138,24,,2.0

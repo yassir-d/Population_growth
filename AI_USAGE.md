@@ -10,14 +10,9 @@ I used AI as a collaborator to:
 - Help draft documentation text (README/PROPOSAL/report outline).
 
 ## Significant Contributions (where AI meaningfully helped)
-1. **Data ingestion & parsing**
+  **Data ingestion & parsing**
    - Guidance on loading PC-Axis `.px` files and handling multilingual PX structures.
    - Robust path handling with `pathlib`.
-
-2. **Evaluation & reporting outputs**
-   - Time-based train/test split strategy.
-   - RMSE computation and model comparison table generation. (Only helped me on this part)
-   - Plot scripts for predictions/residuals and lag-sensitivity analysis.
 
 ## What I Did Myself
 - Implemented and integrated the final code in my repository.

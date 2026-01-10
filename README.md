@@ -24,7 +24,7 @@ Random Forest Regression
 
 Formal model comparison using:
 
-RMSE
+RMSE (Root Mean sqaured Error)
 
 **Why This Project ?**
 

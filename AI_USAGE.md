@@ -13,10 +13,10 @@ I used AI as a collaborator to:
   **Data ingestion & parsing**
    - Guidance on loading PC-Axis `.px` files and handling multilingual PX structures.
    - Robust path handling with `pathlib`.
+   - It helped the most during the data cleaning part.
 
 ## What I Did Myself
 - Implemented and integrated the final code in my repository.
-- Chose the dataset files and organized the data folders.
 - Ran experiments, produced figures/tables, and verified outputs.
 - Fixed remaining bugs and ensured `python main.py` runs end-to-end.
 

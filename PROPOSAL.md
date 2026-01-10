@@ -11,22 +11,17 @@ The goal of this project is to build a **data-driven forecasting system** for Sw
 
 > Can machine learning models and richer covariates improve population forecasts compared to a naïve constant-growth model?
 
-This fits the course objective of applying data science and machine learning methods to real data, with a clear focus on estimation and model comparison.
 
 ---
 
 ## 2. Data
 
-All data will come from official, open sources (no scraping):
+All data will come from :
 
 - Swiss Federal Statistical Office (BFS):  
   - Annual total population  
   - Births and deaths  
   - Net migration  
-
-- (Optional) Macroeconomic indicators (BFS / SECO):  
-  - GDP growth  
-  - Employment / unemployment rate  
 
 The target variable is the **annual total population**, while births, deaths, migration and macro variables serve as predictors. This creates a **richer, multi-variable setting** where machine learning can actually “learn” relationships, not just extrapolate a trend.
 
@@ -41,8 +36,7 @@ The target variable is the **annual total population**, while births, deaths, mi
   - Annual growth rate (%)
   - Lagged population levels
   - Demographic rates (births/population, deaths/population, net migration/population)
-  - Optional macro features (GDP growth, employment growth)  
-- Split into train and test periods (e.g. 1980–2010 train, 2011–2023 test).
+  - Split into train and test periods.
 
 ---
 
@@ -55,19 +49,19 @@ The target variable is the **annual total population**, while births, deaths, mi
 **Statistical / ML models:**
 
 1. **Multiple Linear Regression**  
-   - Predict population (or growth) using lagged population and demographic/macro variables.  
+   - Predict population (or growth) using lagged population and demographic variables.  
    - Interpretable coefficients (e.g. effect of migration on population growth).
 
 2. **Time-Series Model (AR / ARIMA)**  
    - Purely time-series based, modeling autocorrelation in population or growth rates.  
    - Captures persistence and shocks over time.
 
-3. **Random Forest Regression**  
+3. **Random Forest Regression (Not sure)**  
    - Non-linear model using all available predictors (lags + demographic + macro variables).  
    - Can capture interactions (e.g. migration × GDP growth) and non-linear effects.  
    - Provides feature importance for interpretability.
 
-4. **Gradient Boosted Trees (e.g. XGBoost or equivalent)**  
+4. **Gradient Boosted Trees (e.g. XGBoost or equivalent) (Optional)**  
    - More flexible ensemble model, often strong in tabular forecasting tasks.  
    - Tests whether boosting improves over Random Forest and linear models.
 
@@ -103,3 +97,4 @@ The project is successful if:
 - Age-group-specific forecasting (e.g. 0–19, 20–64, 65+).  
 - Scenario analysis (high vs low migration).  
 - Simple Streamlit dashboard for interactive forecasts.
+- Macro based modeling

@@ -18,21 +18,13 @@ Naïve baseline model (constant growth rate)
 
 Linear Regression
 
-Autoregressive model (AR / simplified ARIMA)
+Autoregressive model (AR)
 
 Random Forest Regression
 
 Formal model comparison using:
 
 RMSE
-
-MAE
-
-MAPE
-
-Visualization of forecasts and errors
-
-Clean modular code following course requirements
 
 **Why This Project ?**
 
